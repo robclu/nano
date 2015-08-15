@@ -25,10 +25,14 @@ To install *nano* run:
 ```
 sudo make install
 ```
+You cna __uninstall__ nano as follows:
+```
+sudo make uninstall
+```
 
 ## Compilers
 
-I have tested the library with the following compilers on ubuntu 15.04:
+*Nano* has been tested with the following compilers on ubuntu 15.04:
 
 * g++ - version 4.9.1
 * clang++ - version 3.6.1
@@ -39,10 +43,19 @@ I haven't tested it on Windows yet, however, I would expect it would work.
 
 To run the test file you'll need to install the boost libraries from [Boost](http://www.boost.org/) and install the test library (the test file dynamically links the test library, so you'll actually have to install the library and not just include the header file).
 
+Then you will need to install *nano* __before__ running the test suite - see [Install](#install) above.
+
 Then you can run the tests with:
 
 ```
-make run
+make                    # builds then runs
+                        # or
+make build_and_run      # builds then runs
+```
+or by
+```
+make build              # only builds
+./nano_test_suite       
 ```
 
 # Usage
