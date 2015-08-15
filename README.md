@@ -14,9 +14,9 @@ I've also tried to document the code well enough for others to learn from, since
 
 *nano* is a header only library, so to use it you just need to include the header file:
 ```.cpp
-include "nano/nano.hpp"
+#include "nano/nano.hpp"
 ```
-so long as the firstory is in your ```$PATH```. 
+so long as the dirctory is in your ```$PATH```. 
 
 A Makefile is provided to install *nano* to ```/usr/local``` (all this does is move the ```nano``` folder to ```/usr/local``` which you can change by changing the ```INSTALL_DIR``` variable in the Makefile). Make sure to change it to a directory which is on your ```$PATH```, or add it to your ```$PATH```.
 
