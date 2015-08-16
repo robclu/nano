@@ -7,9 +7,7 @@
 #define BOOST_TEST_MODULE       NanoTests
 #include <boost/test/unit_test.hpp>
 
-#include <nano/numeric_types.hpp>
-#include <nano/functions.hpp>
-#include <nano/containers.hpp>
+#include <nano/nano.hpp>
 
 #include <iostream>
 
@@ -101,8 +99,24 @@ BOOST_AUTO_TEST_CASE( canCreateRange )
     BOOST_CHECK( range_4.runtime_value() ==  4 );
 }
 
-BOOST_AUTO_TEST_CASE( canZipListElementsWithEqualityEvaluator )
+BOOST_AUTO_TEST_CASE( zipHigherOrderFunctionWorks )
 { 
+    using range_one     = nano::range<-10, 10, 2>::result;          // range of [-10, -8 , ..., 8 , 10 ]
+    
+    // This will make a list of [ {-10, -10}, {-8, -8}, ..., {10, 10} ]
+    // since the equal_value comparator function is used
+    using zipped_range  = nano::zip<nano::equal_value, range_one, range_one, nano::empty_list>::result;
+    
+    // Get the first element in the zipped list which will be list< nano::int_t<-10>, nano::int_t<-10> >
+    using first_zipped = nano::get<0, zipped_range>;
+    
+    // And we can not get the element from the sub list
+    using first_zipped_element = nano::get<0, first_zipped>;
+    
+    // This should be nano::int_t<-10> so we can declare a type like that
+    first_zipped_element first_element;
+    
+    BOOST_CHECK( first_element.runtime_value() == -10 );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

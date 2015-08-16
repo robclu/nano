@@ -45,7 +45,7 @@ struct pair
 };
 
 namespace detail {
-    
+
     // ------------------------------------------------------------------------------------------------------
     /// @struct     build_range 
     /// @brief      Builds a range of nano::int_t types

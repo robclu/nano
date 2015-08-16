@@ -30,6 +30,7 @@
 #include "containers.hpp"
 #include "eval.hpp"
 #include "functions.hpp"
+#include "higher_order_functions.hpp"
 #include "list.hpp"
 #include "numeric_types.hpp"
 

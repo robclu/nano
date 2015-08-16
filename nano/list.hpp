@@ -51,7 +51,7 @@ template <typename... Ts>
 struct list
 {
     using type = list<Ts...>;
-    
+        
     // ------------------------------------------------------------------------------------------------------
     /// @struct     apply
     /// @brief      Applies the function to each element in the list
@@ -140,49 +140,6 @@ struct join;
 // Specialization for using list types
 template <typename... Ts, typename... Us>
 struct join<list<Ts...>, list<Us...>> : public identify<list<Ts..., Us...>> {};
-
-// ----------------------------------------------------------------------------------------------------------
-/// @struct     zip 
-/// @brief      Takes two lists, and zips the corresponding elements into a list of 2 elements if the function
-///             to determine if the elements should be zips succeeds, otherwise the elements are not zipped.
-/// @tparam     Evaluator       A function which operates on corresponding elements from the 2 lists to
-///             determine if the elements should be zipped.
-/// @tparam     List1           First list for zipping.
-/// @tparam     List2           Second list for zipping.
-/// @tparam     Passed          The elements which have 'passed' the functions test and have been added to the
-///             zipped list.
-// ----------------------------------------------------------------------------------------------------------
-template <template <typename...> class  Evaluator   , 
-          typename                      List1       , 
-          typename                      List2       , 
-          typename...                   Passed      >
-struct zip;
-
-// Recursize case - when the whole list has not been traversed
-template <template <typename...> class  Evaluator   ,
-          typename                      Head1       , 
-          typename...                   Tail1       ,
-          typename                      Head2       ,
-          typename...                   Tail2       ,
-          typename...                   Passed      >
-struct zip<Evaluator, list<Head1, Tail1...>, list<Head2, Tail2...>, list<Passed...>>
-{
-    using passed = typename std::conditional<
-                                Evaluator<Head1, Head2>::result,                // Check if we must zip
-                                list<Passed..., list<Head1, Head2>>,            // Zip head elements if true
-                                list<Passed...>                                 // Don't zip if false
-                                    >::type;
-    
-    // Recurse until we reach the base case (pattern)
-    using result = typename zip<Evaluator, list<Tail1...>, list<Tail2...>, passed>::result;
-};
-
-// Base case - not more elements to check in List1 or List 2
-template <template <typename...> class Evaluator, typename... Passed>
-struct zip<Evaluator, empty_list, empty_list, list<Passed...>>
-{
-    using result = list<Passed...>;
-};
 
 }   // End namespace nano
 
