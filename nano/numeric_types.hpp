@@ -24,8 +24,8 @@
  * ----------------------------------------------------------------------------------------------------------
  */
 
-#ifndef NANO_NUMERIC_TYPES
-#define NANO_NUMERIC_TYPES
+#ifndef NANO_NUMERIC_TYPES_HPP
+#define NANO_NUMERIC_TYPES_HPP
 
 namespace nano {
  
@@ -81,8 +81,6 @@ namespace dim {
     nano::size_t<3> m;
 
 }       // End namespace dim
-
 }       // End namespace nano
 
-
-#endif
+#endif  // NANO_NUMERIC_TYPES_HPP

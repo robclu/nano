@@ -24,8 +24,8 @@
  * ----------------------------------------------------------------------------------------------------------
  */
 
-#ifndef NANO_FUNCTIONS
-#define NANO_FUNCTIONS
+#ifndef NANO_FUNCTIONS_HPP
+#define NANO_FUNCTIONS_HPP
 
 namespace nano {
 
@@ -66,7 +66,6 @@ struct both_found
     static constexpr bool result = ( (Type1::value != -1) && (Type2::value != -1) ) ? true : false;
 };
 
-};
+}       // End namespace nano
 
-
-#endif      // NANO_FUNCTIONS
+#endif  // NANO_FUNCTIONS_HPP

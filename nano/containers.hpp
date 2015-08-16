@@ -24,8 +24,8 @@
  * ----------------------------------------------------------------------------------------------------------
  */
 
-#ifndef NANO_CONTAINERS
-#define NANO_CONTAINERS
+#ifndef NANO_CONTAINERS_HPP
+#define NANO_CONTAINERS_HPP
 
 #include <nano/list.hpp>
 
@@ -109,4 +109,4 @@ struct range
 
 }       // End namespace nano
 
-#endif
+#endif  // NANO_CONTAINERS_HPP

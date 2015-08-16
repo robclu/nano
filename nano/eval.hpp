@@ -25,8 +25,8 @@
  * ----------------------------------------------------------------------------------------------------------
  */
 
-#ifndef NANO_EVAL
-#define NANO_EVAL
+#ifndef NANO_EVAL_HPP
+#define NANO_EVAL_HPP
 
 #include <nano/numeric_types.hpp>
 
@@ -116,6 +116,6 @@ struct eval<Function<Args...>, no_args>
     using result = typename function::result;
 };
 
-}   // End namespace nano
+}       // End namespace nano
 
-#endif
+#endif  // NANO_EVAL_HPP

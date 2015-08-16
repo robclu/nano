@@ -24,8 +24,8 @@
  * ----------------------------------------------------------------------------------------------------------
  */
 
-#ifndef NANO_NANO
-#define NANO_NANO
+#ifndef NANO_NANO_HPP
+#define NANO_NANO_HPP
 
 #include "containers.hpp"
 #include "eval.hpp"
@@ -34,4 +34,4 @@
 #include "list.hpp"
 #include "numeric_types.hpp"
 
-#endif      // NANO_NANO
+#endif  // NANO_NANO_HPP
