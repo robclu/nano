@@ -27,7 +27,6 @@
 #ifndef NANO_LIST_HPP
 #define NANO_LIST_HPP
 
-#include <nano/eval.hpp>
 #include <nano/functions.hpp>
 #include <cassert>
 
@@ -142,6 +141,7 @@ struct join;
 template <typename... Ts, typename... Us>
 struct join<list<Ts...>, list<Us...>> : public identify<list<Ts..., Us...>> {};
 
+/*
 namespace detail {
     
     // ------------------------------------------------------------------------------------------------------
@@ -165,8 +165,8 @@ namespace detail {
     {
         // For all elements in list one, search for the element's index in list2
         using result = list<
-                        nano::int_t<find_type<Head1, list<Head2, Tail2...>>::result,        // Head of List1
-                        nano::int_t<find_type<Tail1, list<Head2, Tail2...>>::result...>;    // Rest of List1
+                        nano::int_t<find_type<Head1, list<Head2, Tail2...>>::result>,        // Head of List1
+                        nano::int_t<find_type<Tail1, list<Head2, Tail2...>>::result>...>;    // Rest of List1
     };
 }   // End namespace detail
 
@@ -177,15 +177,15 @@ template <typename Head1, typename... Tail1, typename Head2, typename... Tail2>
 struct find_common<list<Head1, Tail1...>, list<Head2, Tail2...>>
 {
     // Create indices to zip
-    using indices = nano::range<0, sizeof...(Tail1) + 1, 1>;
+    using indices = nano::range<0, sizeof...(Tail1) + 1, 1>::result;
     
     // Create a list of the indices of elements from list 2 in list1
     using searched_lists = detail::search_lists<list<Head1, Tail1...>, list<Head2, Tail2...>>;
     
     // Essentially filter by zipping only elements in searched_lists which were found 
-    using result = nano::zip<nano::is_found, indices, searhed_lists>;
+    using result = typename nano::zip<nano::is_found, indices, search_lists>::result;
 };
-
+*/
 }           // End namespace nano
 
 #endif      // NANO_LIST_HPP

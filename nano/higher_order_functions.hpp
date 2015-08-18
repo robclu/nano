@@ -36,7 +36,7 @@
 #ifndef NANO_HIGHER_ORDER_FUNCTIONS
 #define NANO_HIGHER_ORDER_FUNCTIONS
 
-#include <nano/containers.hpp>
+#include <nano/list.hpp>
 
 namespace nano {
     
@@ -67,9 +67,9 @@ template <template <typename...> class  Evaluator   ,
 struct zip<Evaluator, list<Head1, Tail1...>, list<Head2, Tail2...>, list<Passed...>>
 {
     using passed = typename std::conditional<
-                                Evaluator<Head1, Head2>::result,                // Check if we must zip
-                                list<Passed..., list<Head1, Head2>>,            // Zip head elements if true
-                                list<Passed...>                                 // Don't zip if false
+                                Evaluator<Head1, Head2>::result     ,      // Check if we must zip
+                                list<Passed..., list<Head1, Head2>> ,      // Zip head elements if true
+                                list<Passed...>                             // Don't zip if false
                                     >::type;
     
     // Recurse until we reach the base case (pattern)
@@ -82,6 +82,7 @@ struct zip<Evaluator, empty_list, empty_list, list<Passed...>>
 {
     using result = list<Passed...>;
 };
+
 }           // End namespace nano
 
 #endif      // NANO_HIGHER_ORDER_FUNCTIONS

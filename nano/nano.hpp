@@ -32,6 +32,7 @@
 #include "functions.hpp"
 #include "higher_order_functions.hpp"
 #include "list.hpp"
+#include "list_functions.hpp"
 #include "numeric_types.hpp"
 
 #endif  // NANO_NANO_HPP

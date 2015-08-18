@@ -8,6 +8,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <nano/nano.hpp>
+#include <nano/list_functions.hpp>
 
 #include <iostream>
 
@@ -36,7 +37,9 @@ BOOST_AUTO_TEST_CASE( canUseDefinedDimensionTypes )
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-    
+
+// ---------------------------------------- List Tests ------------------------------------------------------
+
 BOOST_AUTO_TEST_SUITE( ListTestSuite )
     
 BOOST_AUTO_TEST_CASE( canCreateAList )
@@ -76,6 +79,63 @@ BOOST_AUTO_TEST_CASE( findTypeIsCorrectWhenTypeNotInList )
     BOOST_CHECK( not_found_type_index == -1 );
 }
 
+BOOST_AUTO_TEST_CASE( canFindCommonElementsInTwoLists )
+{
+    using list_1 = nano::list<nano::int_t<2>, nano::int_t<3>, nano::int_t<7>>;
+    using list_2 = nano::list<nano::int_t<7>, nano::int_t<4>, nano::int_t<3>>;
+    
+    // Look through all elements in list_1 and see if each of the elements exist
+    // in list_2. If the element exists in list 2, then a 2 element list is added to 
+    // a new list with the index in list one and it's corresponding index in list_2.
+    // 
+    // So for the list's above, the final list will be:
+    // 
+    // [ {1, 2}, {2, 0} ]
+    // 
+    // Since element 1 is found at index 2 of list_2 and element 2 is found at index 0
+    using common_list = nano::find_common<typename list_1, typename list_2>::result;
+    
+    /*
+    using first_pair    = nano::get<0, common_list>;              // Gets {1, 2}
+    using second_pair   = nano::get<1, common_list>;              // Gets {2, 0}
+
+    using first_index   = nano::get<0, first_pair>;
+    using first_result  = nano::get<1, first_pair>;
+    using second_index  = nano::get<0, first_pair>;
+    using second_result = nano::get<0, first_pair>;
+    
+    // Declare variables of these types
+    first_index     fi;
+    first_result    fr;
+    second_index    si;
+    second_result   sr;
+    
+    BOOST_CHECK( fi.runtime_value() == 1 );
+    */
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------------ Function Tests ------------------------------------------------------
+
+BOOST_AUTO_TEST_SUITE( FunctionTestSuite )
+
+BOOST_AUTO_TEST_CASE( canGetSizeOfStruct )
+{
+    using test_struct = nano::list<nano::int_t<1>, nano::int_t<2>>;
+    using size_struct = nano::size_of<test_struct>; 
+    // Get size 
+    constexpr int struct_size = size_struct::result;
+    
+    BOOST_CHECK( struct_size == 2 );
+}
+    
+BOOST_AUTO_TEST_SUITE_END()
+    
+// ------------------------------------ Container Tests ------------------------------------------------------
+
+BOOST_AUTO_TEST_SUITE( ContainerTestSuite )
+
 BOOST_AUTO_TEST_CASE( canCreateRange )
 {
     using range = nano::range<-4, 4, 2>::result;         // This makes a range [-4, 4, 2] of nano::int_t types 
@@ -98,6 +158,12 @@ BOOST_AUTO_TEST_CASE( canCreateRange )
     BOOST_CHECK( range_2.runtime_value() ==  0 );
     BOOST_CHECK( range_4.runtime_value() ==  4 );
 }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+// ------------------------------- Higher Order Function Tests ----------------------------------------------
+
+BOOST_AUTO_TEST_SUITE( HigherOrderFunctionTestSuite )
 
 BOOST_AUTO_TEST_CASE( zipHigherOrderFunctionWorks )
 { 

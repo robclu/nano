@@ -27,6 +27,8 @@
 #ifndef NANO_FUNCTIONS_HPP
 #define NANO_FUNCTIONS_HPP
 
+#include "eval.hpp"
+
 namespace nano {
 
 // ----------------------------------------------------------------------------------------------------------
@@ -64,6 +66,21 @@ template <typename Type1, typename Type2>
 struct both_found
 {
     static constexpr bool result = ( (Type1::value != -1) && (Type2::value != -1) ) ? true : false;
+};
+
+// ----------------------------------------------------------------------------------------------------------
+/// @struct     size_of 
+/// @brief      Gets the number of types in a container
+/// @tparam     Container   The container (list, range etc...) to get the size of
+/// @tparam     Types       The types that are the elements of the container
+// ----------------------------------------------------------------------------------------------------------
+template <typename Container, typename... Types>
+struct size_of;
+
+template <template <typename...> class Container, typename... Types>
+struct size_of<Container<Types...>>
+{
+    static constexpr int result = sizeof...(Types);
 };
 
 }       // End namespace nano
