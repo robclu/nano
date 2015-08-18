@@ -59,3 +59,34 @@ make build              # only builds
 ```
 
 # Usage
+
+The main component of the library is the ```list``` struct, which, in its most basic form, just holds a lists of types. It is what *Alexandrescu* calls a *typelist* in his book [Modern C++ Design](http://www.amazon.com/Modern-Design-Generic-Programming-Patterns/dp/0201704315). 
+
+## Lists
+
+It is important to note that lists hold __types__, and __types__ can be mixed in the list, such as:
+```.cpp
+using list_example = nano::list<int, float, double>;
+```
+which may seem inconvienient as the list does not have any values. To overcome this, *nano* defines 'constant' types, which are wrappers around ```int``` and ```size_t``` from the standard library. Using the nano constant types, compile time constants can be defined:
+```.cpp
+using int_four = nano::int_t<4>;
+using int_zero = nano::int_t<0>;
+```
+These values of the constant types can be used at both compile time and run time:
+```.cpp
+nano::int_t<VALUE>::value           // Gets the value of the int at compile time
+
+using int_two = nano::int_t<2>;
+
+int_two i2;                         // Declare variable of type nano::int_t<2>
+
+// Now we can use the variable at runtime 
+if (i2.runtime_value() == 2) {
+  // Evaluates to true 
+}
+```
+The constant types are more useful when used with lists, since now we can create a list of 'values' rather than just types:
+```.cpp
+using int_list = nano::list<nano::int_t<1>, nano::int_t<2>, nano::int_t<3>>;    // List of 3 elements
+```
