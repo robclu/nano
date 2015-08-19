@@ -129,6 +129,41 @@ struct find_type<Type, list<>>
 };
 
 // ----------------------------------------------------------------------------------------------------------
+/// @struct     type_not_present 
+/// @brief      To check if a type in a list is not found. Where the find_type tries to find a type and get 
+///             its index to return, this function simply returns true of the type is not found, and false 
+///             if the tpe is found.
+/// @tparam     Type        The type to check the presence of
+/// @tparam     List        The list to look through
+// ----------------------------------------------------------------------------------------------------------
+template <typename Type, typename List>
+struct type_not_present;
+
+// Recursive case
+template <typename Type, typename Head, typename... Tail>
+struct type_not_present<Type, list<Head, Tail...>>
+{
+    static constexpr int next_result = type_not_present<Type, list<Tail...>>::result;
+    
+    // 'Move through list'
+    static constexpr int result      = next_result <= 0 ? 0 : next_result + 1;
+};
+
+// Case for when the type is found
+template <typename Type, typename... Tail>
+struct type_not_present<Type, list<Type, Tail...>>
+{
+    static constexpr int result = 0;
+};
+
+// Case for not found (Tail will be empty)
+template <typename Type>
+struct type_not_present<Type, list<>>
+{
+    static constexpr int result = 1;
+};
+
+// ----------------------------------------------------------------------------------------------------------
 /// @struct     join
 /// @brief      Joins two lists
 /// @tparam     List1       The first list to join

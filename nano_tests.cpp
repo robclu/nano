@@ -114,6 +114,26 @@ BOOST_AUTO_TEST_CASE( canFindCommonElementsInTwoLists )
     BOOST_CHECK( sr.runtime_value() == 0 );
 }
 
+BOOST_AUTO_TEST_CASE( canCreateListOfUncommonElementsInList )
+{
+    using list_1 = nano::list<nano::int_t<2>, nano::int_t<3>, nano::int_t<7>, nano::int_t<22>>;
+    using list_2 = nano::list<nano::int_t<3>, nano::int_t<22>, nano::int_t<14>, nano::int_t<42>>;
+    
+    // Make a new list of all elements in list 1 that are not in list 2, so those with value 2 and 7
+    using uncommon_list = typename nano::find_uncommon<list_1, list_2>::result;
+    
+    // Get the elements
+    using first_type  = nano::get<0, uncommon_list>;
+    using second_type = nano::get<1, uncommon_list>;
+    
+    // Declare variables of these types
+    first_type  ft;
+    second_type st;
+    
+    BOOST_CHECK( ft.runtime_value() == 2 );
+    BOOST_CHECK( st.runtime_value() == 7 );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 // ------------------------------------ Function Tests ------------------------------------------------------

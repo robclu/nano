@@ -41,6 +41,45 @@
 namespace nano {
     
 // ----------------------------------------------------------------------------------------------------------
+/// @struct     filter
+/// @brief      Takes a list and an evaluation function, which itself takes the list and a parameter to
+///             evaluate if each element of the list must be filtered
+/// @tparam     Evaluator       The function that determines if an element is filtered or not
+/// @tparam     List1           The list to filter
+/// @param      List2           The list to use for filtering (to help Evaluator)
+/// @tparam     Passed          The elements that have passed the Evaluator
+// ----------------------------------------------------------------------------------------------------------
+template <template <typename...> class Evaluator, typename List1, typename List2, typename Passed>
+struct filter;
+
+// Specialization for when Args is a list
+template <template <typename...> class  Evaluator   , 
+          typename                      Head1       , 
+          typename...                   Tail1       , 
+          typename                      Head2       ,
+          typename...                   Tail2       ,   
+          typename...                   Passed      >
+struct filter<Evaluator, list<Head1, Tail1...>, list<Head2, Tail2...>, list<Passed...>>
+{
+    using passed = typename std::conditional<
+                        Evaluator<Head1, list<Head2, Tail2...>>::result     ,
+                        list<Passed..., Head1>                              ,
+                        list<Passed...>
+                            >::type;
+    
+    using result = typename filter<Evaluator, list<Tail1...>, list<Head2, Tail2...>, passed>::result;
+};
+
+// Base case - when all the elements have been evaluated
+template <template <typename...> class  Evaluator   ,
+          typename...                   Tail2       ,
+          typename...                   Passed      >
+struct filter<Evaluator, empty_list, list<Tail2...>, list<Passed...>>
+{
+    using result = list<Passed...>;
+};
+
+// ----------------------------------------------------------------------------------------------------------
 /// @struct     zip 
 /// @brief      Takes two lists, and zips the corresponding elements into a list of 2 elements if the function
 ///             to determine if the elements should be zips succeeds, otherwise the elements are not zipped.
@@ -82,6 +121,7 @@ struct zip<Evaluator, empty_list, empty_list, list<Passed...>>
 {
     using result = list<Passed...>;
 };
+
 
 }           // End namespace nano
 

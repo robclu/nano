@@ -62,9 +62,21 @@ namespace detail {
     };
 }   // End namespace detail
 
+// ----------------------------------------------------------------------------------------------------------
+/// @struct     find_common
+/// @brief      Finds all common elements in 2 lists and returns a zipped list of the result, where each
+///             zipped element is a index of the common element in the lists. The zips are sorted by the
+///             index of the element in the first list. For example, if there are 2 lists:                 \n\n
+///             [ 0, 4, 2, 1 ] and [ 12, 1, 4, 2 ]                                                         \n\n
+///             the returned list will be:                                                                 \n\n
+///             [ [1, 2], [2 ,3], [1, 2] ]
+/// @tparam     List1       The first list to search through
+/// @tparam     List2       The second list to search through
+// ----------------------------------------------------------------------------------------------------------
 template <typename List1, typename List2>
 struct find_common;
 
+// Specialization
 template <typename Head1, typename... Tail1, typename Head2, typename... Tail2>
 struct find_common<list<Head1, Tail1...>, list<Head2, Tail2...>>
 {
@@ -72,10 +84,33 @@ struct find_common<list<Head1, Tail1...>, list<Head2, Tail2...>>
     using indices = typename range<0, sizeof...(Tail1), 1>::result;
     
     // Create a list of the indices of elements from list 2 in list1
-    using searched_lists = typename detail::search_lists<list<Head1, Tail1...>, list<Head2, Tail2...>>::result;
+    using searched_lists = typename 
+        detail::search_lists<list<Head1, Tail1...>, list<Head2, Tail2...>>::result;
     
     // Essentially filter by zipping only elements in searched_lists which were found 
     using result = typename zip<is_found, indices, searched_lists, empty_list>::result;
+};
+
+// ----------------------------------------------------------------------------------------------------------
+/// @struct     find_uncommon
+/// @brief      Finds all elements of the first list which are not present in the second list, and returns a 
+///             new list without the common elements. For example, if there are 2 lists:                   \n\n
+///             [ 2, 3, 1, 4 ] and [ 4, 5, 2 ]                                                             \n\n
+///             the returned list will be:                                                                 \n\n
+///             [ 3, 1 ]
+/// @tparam     List1       The first list to search through
+/// @tparam     List2       The second list to search through
+// ----------------------------------------------------------------------------------------------------------
+template <typename List1, typename List2>
+struct find_uncommon;
+
+// Specialization
+template <typename Head1, typename... Tail1, typename Head2, typename... Tail2>
+struct find_uncommon<list<Head1, Tail1...>, list<Head2, Tail2...>>
+{
+   // Filter out all the elements which were found 
+   using result = typename 
+       filter<type_not_present, list<Head1, Tail1...>, list<Head2, Tail2...>, empty_list>::result;
 };
 
 }           // End namespace nano
