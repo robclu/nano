@@ -45,14 +45,20 @@ struct equal_value
 
 // ----------------------------------------------------------------------------------------------------------
 /// @struct     is_found
-/// @brief      If the type is found (has a value != -1 as per the library convention) then result is true,
-///             otherwise result is false.
-/// @tparam     Type        The type to determine if it is found
+/// @brief      Ths function is supposed to be used with the find functions on lists when searching through
+///             the list to find common or uncommon elements. It should be called by the zip HOF to determine 
+///             if Type1 and Type2 should be zipped and added to the list of elements to return.           \n\n
+///             Please see the implementation of the find_common and zip functions for clarificaiton.
+/// @tparam     Type1       This should NOT be an element which represents if the element was found or not. It
+///             should be an index corresponding to the result of trying to find the element at the index 
+///             represented by Type1 in the first list, in the second list.
+/// @tparam     Type2       This should be the result of whether the element was found (either -1 if it wasn't
+///             found or its index in list2 if it was found).
 // ----------------------------------------------------------------------------------------------------------
-template <typename Type>
+template <typename Type1, typename Type2>
 struct is_found 
 {
-    static constexpr bool result = Type::value != -1 ? true : false;
+    static constexpr bool result = Type2::value != -1 ? true : false;
 };
 
 // ----------------------------------------------------------------------------------------------------------

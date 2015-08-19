@@ -8,7 +8,6 @@
 #include <boost/test/unit_test.hpp>
 
 #include <nano/nano.hpp>
-#include <nano/list_functions.hpp>
 
 #include <iostream>
 
@@ -81,7 +80,7 @@ BOOST_AUTO_TEST_CASE( findTypeIsCorrectWhenTypeNotInList )
 
 BOOST_AUTO_TEST_CASE( canFindCommonElementsInTwoLists )
 {
-    using list_1 = nano::list<nano::int_t<2>, nano::int_t<3>, nano::int_t<7>>;
+    using list_1 = nano::list<nano::int_t<2>, nano::int_t<3>, nano::int_t<7>, nano::int_t<22>>;
     using list_2 = nano::list<nano::int_t<7>, nano::int_t<4>, nano::int_t<3>>;
     
     // Look through all elements in list_1 and see if each of the elements exist
@@ -93,17 +92,16 @@ BOOST_AUTO_TEST_CASE( canFindCommonElementsInTwoLists )
     // [ {1, 2}, {2, 0} ]
     // 
     // Since element 1 is found at index 2 of list_2 and element 2 is found at index 0
-    using common_list = nano::find_common<typename list_1, typename list_2>::result;
+    using common_list = typename nano::find_common<list_1, list_2>::result;
     
-    /*
     using first_pair    = nano::get<0, common_list>;              // Gets {1, 2}
     using second_pair   = nano::get<1, common_list>;              // Gets {2, 0}
 
     using first_index   = nano::get<0, first_pair>;
     using first_result  = nano::get<1, first_pair>;
-    using second_index  = nano::get<0, first_pair>;
-    using second_result = nano::get<0, first_pair>;
-    
+    using second_index  = nano::get<0, second_pair>;
+    using second_result = nano::get<1, second_pair>;
+   
     // Declare variables of these types
     first_index     fi;
     first_result    fr;
@@ -111,7 +109,9 @@ BOOST_AUTO_TEST_CASE( canFindCommonElementsInTwoLists )
     second_result   sr;
     
     BOOST_CHECK( fi.runtime_value() == 1 );
-    */
+    BOOST_CHECK( fr.runtime_value() == 2 );
+    BOOST_CHECK( si.runtime_value() == 2 );
+    BOOST_CHECK( sr.runtime_value() == 0 );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
