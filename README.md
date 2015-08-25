@@ -90,3 +90,36 @@ The constant types are more useful when used with lists, since now we can create
 ```.cpp
 using int_list = nano::list<nano::int_t<1>, nano::int_t<2>, nano::int_t<3>>;    // List of 3 elements
 ```
+
+## Runtime Conversion
+
+```Nano``` provides a conversion class to allow nano containers (currently only lists) to be converted to
+runtime containers. At present, the supported runtime containers are:
+
+# ```std::vector```
+
+Additionally, ```nano``` uses the types of the 'variables' in the list which is being converted to determine
+the types of the variables in the container, thus only types that are used to create types in the
+```nano/numeric_types.hpp``` file are currently, however, this is being worked on. Current supported types
+are:
+
+* ```int```
+* ```size_t```
+
+__Converting to a Runtime Vector:__
+
+```.cpp
+
+// Create a nano::list with 3 integer types
+using int_list = nano::list<nano::int_t<3>, nano::int_t<7>, nano::int_t<12>>;
+    
+// Declare a runtime converter instance for the list
+nano::runtime_converter<int_list> list_converter;
+    
+// Create a runtime vector from the converter
+std::vector<int> test_vector = list_converter.to_vector();
+
+// test_vector can now be used as normal
+for (auto& element : test_vector) 
+    std::cout << element << "\n";
+```

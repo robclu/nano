@@ -37,6 +37,9 @@ namespace nano {
 template <std::size_t Value>
 struct size_t 
 {
+    // Define the type of Value
+    using type = std::size_t;
+    
     // ------------------------------------------------------------------------------------------------------
     /// @brief  Gets the value of the tyoe at compile time
     // ------------------------------------------------------------------------------------------------------
@@ -57,6 +60,9 @@ struct size_t
 template <int Value>
 struct int_t
 {
+    // Define the type of Value
+    using type = int;
+    
     // ------------------------------------------------------------------------------------------------------
     /// @brief  Gets the value type at compile time
     // ------------------------------------------------------------------------------------------------------

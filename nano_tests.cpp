@@ -206,3 +206,26 @@ BOOST_AUTO_TEST_CASE( zipHigherOrderFunctionWorks )
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+    
+// --------------------------------- Runtime Converter Tests ------------------------------------------------
+
+BOOST_AUTO_TEST_SUITE( RuntimeConverterTestSuite )
+    
+BOOST_AUTO_TEST_CASE( canCreateStdVectorFromNanoList )
+{
+    using int_list = nano::list<nano::int_t<3>, nano::int_t<7>, nano::int_t<12>>;
+    
+    // Declare a runtime converter instance for the list 
+    nano::runtime_converter<int_list> list_converter;
+    
+    // Create a runtime vector from the converter
+    std::vector<int> test_vector = list_converter.to_vector();
+    
+    BOOST_CHECK( test_vector.size() == 3  );
+    BOOST_CHECK( test_vector[0]     == 3  );
+    BOOST_CHECK( test_vector[1]     == 7  );
+    BOOST_CHECK( test_vector[2]     == 12 );
+}
+    
+BOOST_AUTO_TEST_SUITE_END()
+
