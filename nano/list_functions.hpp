@@ -113,6 +113,38 @@ struct find_uncommon<list<Head1, Tail1...>, list<Head2, Tail2...>>
        filter<type_not_present, list<Head1, Tail1...>, list<Head2, Tail2...>, empty_list>::result;
 };
 
+// ----------------------------------------------------------------------------------------------------------
+/// @struct     find_uncommon_indices
+/// @brief      Finds the indices of the elements in the first list which are not present in the second list
+///             and returns a list of the index values. For example, if there are 2 lists:                 \n\n
+///             [ 2, 3, 1, 4 ] and [ 4, 5, 2 ]                                                             \n\n
+///             the returned list will be:                                                                 \n\n
+///             [ 1, 3 ] 
+/// @tparam     List1       The list to get the indices of
+/// @tparam     List2       The list to check for elements against
+// ----------------------------------------------------------------------------------------------------------
+template <typename List1, typename List2>
+struct find_uncommon_indices;
+
+// Specialization
+template <typename Head1, typename... Tail1, typename Head2, typename... Tail2>
+struct find_uncommon_indices<list<Head1, Tail1...>, list<Head2, Tail2...>>
+{
+    // Create a list of indices
+    using indices = typename range<0, sizeof...(Tail1), 1>::result;
+    
+    // Create a list of results for if an element in list 1 
+    // is found in list 2
+    using search_results = typename 
+        detail::search_lists<list<Head1, Tail1...>, list<Head2, Tail2...>>::result;
+    
+    // Now create the list of indices of the elements in list one 
+    // which were found in list 2 by filtering the indices list 
+    // using the search results
+    using result = typename 
+        filter<not_found, indices, search_results, empty_list>::result;
+};
+
 }           // End namespace nano
 
 #endif      // LIST_FUNCTIONS_HPP

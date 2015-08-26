@@ -79,6 +79,32 @@ struct filter<Evaluator, empty_list, list<Tail2...>, list<Passed...>>
     using result = list<Passed...>;
 };
 
+// Specialization for evaluator to use list 2 as a filter list
+template <template <typename> class     Evaluator   , 
+          typename                      Head1       , 
+          typename...                   Tail1       , 
+          typename                      Head2       ,
+          typename...                   Tail2       ,   
+          typename...                   Passed      >
+struct filter<Evaluator, list<Head1, Tail1...>, list<Head2, Tail2...>, list<Passed...>>
+{
+    using passed = typename std::conditional<
+                        Evaluator<Head2>::result    ,
+                        list<Passed..., Head1>      ,
+                        list<Passed...>
+                            >::type;
+    
+    using result = typename filter<Evaluator, list<Tail1...>, list<Tail2...>, passed>::result;
+};
+
+// Base case - when all the elements have been evaluated
+template <template <typename> class     Evaluator   ,
+          typename...                   Tail2       ,
+          typename...                   Passed      >
+struct filter<Evaluator, empty_list, list<Tail2...>, list<Passed...>>
+{
+    using result = list<Passed...>;
+};
 // ----------------------------------------------------------------------------------------------------------
 /// @struct     zip 
 /// @brief      Takes two lists, and zips the corresponding elements into a list of 2 elements if the function

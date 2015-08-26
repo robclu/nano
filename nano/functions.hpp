@@ -62,6 +62,17 @@ struct is_found
 };
 
 // ----------------------------------------------------------------------------------------------------------
+/// @struct     not_found
+/// @brief      Function to determine if and element is not found (has a value of -1)
+/// @tparam     Type    The type to check if found
+// ----------------------------------------------------------------------------------------------------------
+template <typename Type>
+struct not_found
+{
+    static constexpr bool result = Type::value == -1 ? true : false;
+};
+
+// ----------------------------------------------------------------------------------------------------------
 /// @struct     both_found 
 /// @brief      Checks if both types are found (have values != -1), in which case result is true, otherwise
 ///             result is false

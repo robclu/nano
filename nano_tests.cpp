@@ -134,6 +134,27 @@ BOOST_AUTO_TEST_CASE( canCreateListOfUncommonElementsInList )
     BOOST_CHECK( st.runtime_value() == 7 );
 }
 
+BOOST_AUTO_TEST_CASE( canCreateListOfUncommonElementIndices )
+{
+    using list_1 = nano::list<nano::int_t<3>, nano::int_t<2>, nano::int_t<7>, nano::int_t<22>>;
+    using list_2 = nano::list<nano::int_t<3>, nano::int_t<22>, nano::int_t<14>, nano::int_t<42>>;
+    
+    // Make a new list of all elements in list 1 that are not in list 2, so those with value 2 and 7
+    using uncommon_indices = typename nano::find_uncommon_indices<list_1, list_2>::result;
+    
+    // Get the elements
+    using first_type  = nano::get<0, uncommon_indices>;
+    using second_type = nano::get<1, uncommon_indices>;
+    
+    // Declare variables of these types
+    first_type  ft;
+    second_type st;
+    
+    
+    BOOST_CHECK( ft.runtime_value() == 1 );     // 0 element with value 2 in list_1
+    BOOST_CHECK( st.runtime_value() == 2 );     // 2 element with value 7 in list_1
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 // ------------------------------------ Function Tests ------------------------------------------------------

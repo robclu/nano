@@ -91,7 +91,20 @@ The constant types are more useful when used with lists, since now we can create
 using int_list = nano::list<nano::int_t<1>, nano::int_t<2>, nano::int_t<3>>;    // List of 3 elements
 ```
 
-## Runtime Conversion
+#### Finding Types
+ 
+A list can be searched by type to get the type's index in the list. These types can be nano numeric types 
+such as ```nano::int_t``` and ```nano::size_t``` so if you have a list of nano compile time ints for example,
+then elements can be found like
+```.cpp
+// Create a test list
+using test_list = nano::list<nano::size_t<2>, nano::size_t<4>, nano::int_t<6>>;
+    
+// This will return the index of nano::int_t<2> elements
+std::size_t size_two_index  = nano::find_type<nano::size_t<2>, test_list>::result;  // = 0
+```
+
+#### Runtime Conversion
 
 ```Nano``` provides a conversion class to allow nano containers (currently only lists) to be converted to
 runtime containers. At present, the supported runtime containers are:
