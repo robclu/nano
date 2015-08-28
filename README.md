@@ -97,16 +97,16 @@ Nano defines a size parameter as part of a list, which can be used as follows
 using example_list = nano::list<nano::int_t<2>, nano::int_t<4>>;
 
 // The size of the list can be used as a variable
-std::size_t list_size = test_list::size;
+std::size_t list_size = example_list::size;
 
 // Or as a condition
-if (test_list::size > 0 ) {
-    ...
+if (example_list::size > 0 ) {
+    // ...
 }
 
 // And can also be used as a compile-time constant,
 // for example to make a nano:range
-using range = nano:;range<0, test_list::size, 1>::result;
+using range = nano::range<0, example_list::size, 1>::result;
 ```
 
 #### Finding Types
@@ -127,7 +127,7 @@ std::size_t size_two_index  = nano::find_type<nano::size_t<2>, test_list>::resul
 ```Nano``` provides a conversion class to allow nano containers (currently only lists) to be converted to
 runtime containers. At present, the supported runtime containers are:
 
-# ```std::vector```
+* ```std::vector```
 
 Additionally, ```nano``` uses the types of the 'variables' in the list which is being converted to determine
 the types of the variables in the container, thus only types that are used to create types in the
