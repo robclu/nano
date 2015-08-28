@@ -90,6 +90,24 @@ The constant types are more useful when used with lists, since now we can create
 ```.cpp
 using int_list = nano::list<nano::int_t<1>, nano::int_t<2>, nano::int_t<3>>;    // List of 3 elements
 ```
+#### List Size
+
+Nano defines a size parameter as part of a list, which can be used as follows
+```.cpp
+using example_list = nano::list<nano::int_t<2>, nano::int_t<4>>;
+
+// The size of the list can be used as a variable
+std::size_t list_size = test_list::size;
+
+// Or as a condition
+if (test_list::size > 0 ) {
+    ...
+}
+
+// And can also be used as a compile-time constant,
+// for example to make a nano:range
+using range = nano:;range<0, test_list::size, 1>::result;
+```
 
 #### Finding Types
  

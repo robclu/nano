@@ -1,4 +1,4 @@
-// ----------------------------------------------------------------------------------------------------------
+/ ----------------------------------------------------------------------------------------------------------
 /// @file   nano_tests.cpp
 /// @brief  Test suites for the nano library using Bost.Unit.
 // ----------------------------------------------------------------------------------------------------------
@@ -53,6 +53,13 @@ BOOST_AUTO_TEST_CASE( canCreateAList )
     
     BOOST_CHECK( elem_zero.runtime_value() == 3 );
     BOOST_CHECK( elem_one.runtime_value()  == 9 );
+}
+
+BOOST_AUTO_TEST_CASE( canGetSizeOfList )
+{
+    using test_list = nano::list<nano::int_t<4>, nano::int_t<12>>;
+  
+    BOOST_CHECK( test_list::size == 2 );
 }
 
 BOOST_AUTO_TEST_CASE( canFindTypeInList )
