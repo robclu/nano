@@ -61,6 +61,39 @@ make build              # only builds
 # Usage
 
 The main component of the library is the ```list``` struct, which, in its most basic form, just holds a lists of types. It is what *Alexandrescu* calls a *typelist* in his book [Modern C++ Design](http://www.amazon.com/Modern-Design-Generic-Programming-Patterns/dp/0201704315). 
+Nano defines numeric types, which can be used as compile-time constants through the ```value``` parameter, and the
+runtime values can be used through the ```runtime_value()``` function after defining an instance. 
+
+The following types are currently available
+
+* ```nano::int_t```
+* ```nano::size_t```
+
+```.cpp
+using example_int  = nano::int_t<4>;
+using example_size = nano::size_t<12>;
+
+// Get the compile time value of the numeric type
+using new_int = nano::int_t<example_int::value>;
+
+// And the runtime values can ge used
+example_int nano_int_instance;
+
+int runtime_int = nano_int_instance.runtime_value();
+```
+
+## Functions 
+
+Nano provides numerous compile times functions.
+
+#### Multiplication
+
+```.cpp
+using int_1 = nano::int_t<4>;
+using int_2 = nano::int_t<2;
+
+int result = nano::multiply<int_1, int_2>::result;      // result is 8
+```
 
 ## Lists
 

@@ -27,7 +27,7 @@
 #ifndef NANO_FUNCTIONS_HPP
 #define NANO_FUNCTIONS_HPP
 
-#include "eval.hpp"
+#include <nano/eval.hpp>
 
 namespace nano {
 
@@ -99,6 +99,30 @@ struct size_of<Container<Types...>>
 {
     static constexpr int result = sizeof...(Types);
 };
+
+// ----------------------------------------------------------------------------------------------------------
+/// @struct     multiply
+/// @brief      Multiplies two nano numeric types
+/// @tparam     Arg1    The forst argument for the multiplication
+/// @tparam     Arg2    The second argument for multiplication
+// ----------------------------------------------------------------------------------------------------------
+template <typename Arg1, typename Arg2>
+struct multiply
+{
+    static constexpr typename Arg1::type result = Arg1::value * Arg2::value;
+};
+
+// Mpve to list functions
+
+// ----------------------------------------------------------------------------------------------------------
+/// @struct     multiplies
+/// @brief      Same as std::multiplies, but for a nano:list which can be computed at compile time - computes
+///             the product of the list elelents from the starting value.
+/// @tparam     List        The list to compute the product of
+/// @tparam     StartValue  The initial value for the multiplication
+// ----------------------------------------------------------------------------------------------------------
+template <typename List, typename StartValue>
+struct multiplies;
 
 }       // End namespace nano
 

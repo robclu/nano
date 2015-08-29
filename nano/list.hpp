@@ -53,17 +53,6 @@ struct list
     using type = list<Ts...>;
     
     static constexpr std::size_t size = sizeof...(Ts);                               //!< The size of the list
-    
-    // ------------------------------------------------------------------------------------------------------
-    /// @struct     apply
-    /// @brief      Applies the function to each element in the list
-    /// @tparam     Function    The function to apply the the list elements
-    // ------------------------------------------------------------------------------------------------------
-    template <template <typename...> class Function>
-    struct apply
-    {
-        using type = list<typename eval<Function<Ts>, no_args>::result...>;
-    };
 };
 
 // Define a list with no arguments

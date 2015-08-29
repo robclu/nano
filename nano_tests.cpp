@@ -1,4 +1,4 @@
-/ ----------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
 /// @file   nano_tests.cpp
 /// @brief  Test suites for the nano library using Bost.Unit.
 // ----------------------------------------------------------------------------------------------------------
@@ -176,6 +176,16 @@ BOOST_AUTO_TEST_CASE( canGetSizeOfStruct )
     constexpr int struct_size = size_struct::result;
     
     BOOST_CHECK( struct_size == 2 );
+}
+
+BOOST_AUTO_TEST_CASE( canMultiplyTwoNanoNumericTypes )
+{
+    using int_1 = nano::int_t<4>;
+    using int_2 = nano::int_t<3>;
+   
+    int result = nano::multiply<int_1, int_2>::result;
+    
+    BOOST_CHECK( result == 12 );
 }
     
 BOOST_AUTO_TEST_SUITE_END()
