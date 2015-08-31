@@ -31,6 +31,8 @@
 
 #include <nano/higher_order_functions.hpp>
 
+#include <type_traits>
+
 namespace nano {
    
 namespace detail {
@@ -143,6 +145,39 @@ struct find_uncommon_indices<list<Head1, Tail1...>, list<Head2, Tail2...>>
     // using the search results
     using result = typename 
         filter<not_found, indices, search_results, empty_list>::result;
+};
+
+// ----------------------------------------------------------------------------------------------------------
+/// @struct     multiplies
+/// @brief      Same as std::multiplies, but for a nano:list which can be computed at compile time - computes
+///             the product of the list elelents from the starting value.
+/// @tparam     List        The list to compute the product of
+/// @tparam     Current     The current value of the multiplication (for the first case, this is the start
+///                         value and is default to 1)
+// ----------------------------------------------------------------------------------------------------------
+template <typename List, typename Current = nano::int_t<1>>
+struct multiplies;
+
+// Specialization for list
+template <typename Head, typename... Tail, typename Current>
+struct multiplies<list<Head, Tail...>, Current>
+{
+    // Multiply head of list and the current value to update the total product sum
+    using updated_value = typename std::conditional<
+                                    std::is_same<typename Current::type, int>::value,
+                                    nano::int_t< Head::value * Current::value>,
+                                    nano::size_t<Head::value * Current::value>
+                                        >::type;
+        
+    // Now use the updaed value and multiply with the next list element on the next level of recursion
+    static constexpr typename Current::type result = multiplies<list<Tail...>, updated_value>::result;
+};
+
+// Terminating case
+template <typename Current>
+struct multiplies<empty_list, Current>
+{
+    static constexpr typename Current::type result = Current::value;
 };
 
 }           // End namespace nano

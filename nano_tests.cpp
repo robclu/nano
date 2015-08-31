@@ -162,6 +162,34 @@ BOOST_AUTO_TEST_CASE( canCreateListOfUncommonElementIndices )
     BOOST_CHECK( st.runtime_value() == 2 );     // 2 element with value 7 in list_1
 }
 
+BOOST_AUTO_TEST_CASE( canGetListProductOfIntList )
+{
+    using int_list = nano::list<nano::int_t<2>, nano::int_t<4>, nano::int_t<6>>;
+    
+    // Do multiplication using the default start value of 1
+    int default_result = nano::multiplies<int_list>::result;
+    
+    // Specify a starting value
+    int other_result = nano::multiplies<int_list, nano::int_t<2>>::result;
+    
+    BOOST_CHECK( default_result == 48 );
+    BOOST_CHECK( other_result   == 96 );
+}
+
+BOOST_AUTO_TEST_CASE( canGetListProductOfSizetList )
+{
+    using sizet_list = nano::list<nano::size_t<2>, nano::size_t<4>, nano::size_t<6>>;
+    
+    // Do multiplication using the default start value of 1
+    int default_result = nano::multiplies<sizet_list>::result;
+    
+    // Specify a starting value
+    int other_result = nano::multiplies<sizet_list, nano::size_t<2>>::result;
+    
+    BOOST_CHECK( default_result == 48 );
+    BOOST_CHECK( other_result   == 96 );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 // ------------------------------------ Function Tests ------------------------------------------------------

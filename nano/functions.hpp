@@ -112,18 +112,6 @@ struct multiply
     static constexpr typename Arg1::type result = Arg1::value * Arg2::value;
 };
 
-// Mpve to list functions
-
-// ----------------------------------------------------------------------------------------------------------
-/// @struct     multiplies
-/// @brief      Same as std::multiplies, but for a nano:list which can be computed at compile time - computes
-///             the product of the list elelents from the starting value.
-/// @tparam     List        The list to compute the product of
-/// @tparam     StartValue  The initial value for the multiplication
-// ----------------------------------------------------------------------------------------------------------
-template <typename List, typename StartValue>
-struct multiplies;
-
 }       // End namespace nano
 
 #endif  // NANO_FUNCTIONS_HPP

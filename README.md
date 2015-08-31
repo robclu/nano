@@ -155,6 +155,42 @@ using test_list = nano::list<nano::size_t<2>, nano::size_t<4>, nano::int_t<6>>;
 std::size_t size_two_index  = nano::find_type<nano::size_t<2>, test_list>::result;  // = 0
 ```
 
+#### Multiplies
+
+The multiplies functions is the same as std::multiplies -- it multiplies all the elements of the list. It
+needs a list and a starting value. If no starting value is given then 1 is used. Currently the multiplies
+function supports the following types
+
+* ```nano::int_t```
+* ```nano::size_t```
+
+To multiply all elements with a starting value of 1, you can do the following
+
+```.cpp
+using two  = nano::int_t<2>;
+using four = nano::int_t<4>;
+using six  = nano::int_t<6>;
+
+using int_list = nano::list<two, four, siz>;
+
+// result has a value of 48
+int result = nano::multiplies<int_list>::result;
+```
+
+Or to start the multiplication from a different value
+
+```.cpp
+using two  = nano::int_t<2>;
+using four = nano::int_t<4>;
+using six  = nano::int_t<6>;
+
+using int_list = nano::list<two, four, siz>;
+
+// result has a value of 96, since the multiplication 
+// started from a value of 2
+int result = nano::multiplies<int_list, two>::result;
+```
+
 #### Runtime Conversion
 
 ```Nano``` provides a conversion class to allow nano containers (currently only lists) to be converted to
