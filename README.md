@@ -213,11 +213,8 @@ __Converting to a Runtime Vector:__
 // Create a nano::list with 3 integer types
 using int_list = nano::list<nano::int_t<3>, nano::int_t<7>, nano::int_t<12>>;
     
-// Declare a runtime converter instance for the list
-nano::runtime_converter<int_list> list_converter;
-    
 // Create a runtime vector from the converter
-std::vector<int> test_vector = list_converter.to_vector();
+std::vector<int> test_vector = nano::runtime_converter<int_list>::to_vector();
 
 // test_vector can now be used as normal
 for (auto& element : test_vector) 
