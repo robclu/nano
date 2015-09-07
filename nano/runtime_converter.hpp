@@ -103,23 +103,11 @@ namespace nano {
     template <typename Head, typename... Tail>
     struct runtime_converter<list<Head, Tail...>>
     {
-        // Define type of the list elements (i.e int, float etc ...) 
-        // The types are assumed to be the same for a vector
-        //using element_type = typename Head::type;
-        
-        // --------------------------------------------------------------------------------------------------
-        /// @brief      Converts a nano list into a std vector 
-        /// @return     A std::vector with elements from the nano::list
-        // --------------------------------------------------------------------------------------------------
-        //static constexpr std::vector<element_type> to_vector() 
-        //{
-        //    return std::vector<element_type>({Head::value, Tail::value...});
-        //}
-        
         // Number of elements in the external array - for readability of below function
         static constexpr std::size_t num_elements = sizeof...(Tail) + 1;
         
-        using array_type = typename detail::array_convert<Head>::type;
+        using array_internal_type   = typename detail::array_convert<Head>::type;
+        using array_type            = typename std::array<array_internal_type, num_elements>;       
         
         // --------------------------------------------------------------------------------------------------
         /// @brief      Converts a nano::list to a std::array, if the nano::list just contains elements. If
@@ -127,12 +115,13 @@ namespace nano {
         /// @return     A std::array of elements, where the element type depends on the elements of the
         ///             nano::list from which it is created.
         // --------------------------------------------------------------------------------------------------
-        static constexpr std::array<array_type, num_elements> to_array() {
-            return std::array<array_type, num_elements>{ {detail::array_convert<Head>::result(), 
-                                                          detail::array_convert<Tail>::result()...} };
+        static constexpr array_type to_array() {
+            return array_type{ {detail::array_convert<Head>::result(), 
+                                detail::array_convert<Tail>::result()...} };
         }
         
-        using vector_type = typename detail::vector_convert<Head>::type;
+        using vector_internal_type  = typename detail::vector_convert<Head>::type;
+        using vector_type           = typename std::vector<vector_internal_type>;
         
         // --------------------------------------------------------------------------------------------------
         /// @brief      Converts a nano::list to a std::vector, if the nano::list just contains elements. If
@@ -140,9 +129,9 @@ namespace nano {
         /// @return     A std::vector of elements, where the element type depends on the elements of the
         ///             nano::list from which it is created.
         // --------------------------------------------------------------------------------------------------
-        static constexpr std::vector<vector_type> to_vector() {
-            return std::vector<vector_type>{ {detail::vector_convert<Head>::result(),
-                                              detail::vector_convert<Tail>::result()...} };
+        static constexpr vector_type to_vector() {
+            return vector_type{ {detail::vector_convert<Head>::result(),
+                                 detail::vector_convert<Tail>::result()...} };
         }
     };
     
