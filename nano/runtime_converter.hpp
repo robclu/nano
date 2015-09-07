@@ -30,10 +30,67 @@
 
 #include <nano/list.hpp>
 
+#include <array>
 #include <vector>
+#include <type_traits>
 
 namespace nano {
    
+    // For 'behind the scenes' or more involved implementations
+    namespace detail {
+        
+        // --------------------------------------------------------------------------------------------------
+        /// @struct     array_convert 
+        /// @brief      Converts an element to a std type, like nano::int_t to inr or a nano::list into a 
+        ///             std::array with N elements
+        /// @tparam     Elements    The element(s) to convert to a std type or std::array
+        // --------------------------------------------------------------------------------------------------
+        template <typename Element>
+        struct array_convert
+        {
+            using type = typename Element::type;
+            
+            static constexpr type result() { return Element::value; };
+        };
+        
+        // Specialization
+        template <typename First, typename... Rest>
+        struct array_convert<list<First, Rest...>>
+        {
+            static constexpr std::size_t size = sizeof...(Rest) + 1;
+            
+            using type = typename std::array<typename First::type, size>;
+            
+            static constexpr type result() { 
+                return type{ {First::value, Rest::value...} };
+            }
+        };
+        
+        // --------------------------------------------------------------------------------------------------
+        /// @struct     vector_convert
+        /// @brief      Same as convert, but uses vector's instead of arrays, so the performance is worse
+        /// @tparam     Element     The element(s) to convert to a std type or std::vector
+        // --------------------------------------------------------------------------------------------------
+        template <typename Element>
+        struct vector_convert
+        {
+            using type = typename Element::type;
+            
+            static constexpr type result() { return Element::value; };
+        };
+        
+        // Specialization for lists
+        template <typename First, typename... Rest>
+        struct vector_convert<list<First, Rest...>>
+        {
+            using type = typename std::vector<typename First::type>;
+            
+            static constexpr type result() {
+                return type{ {First::value, Rest::value...} };
+            }
+        };
+    }
+    
     // -------------------------------------------------------------------------------------------------------
     /// @struct      runtime_converter
     /// @brief       Wrapper class to provide the conversion functions for converting to runtime containers
@@ -48,15 +105,44 @@ namespace nano {
     {
         // Define type of the list elements (i.e int, float etc ...) 
         // The types are assumed to be the same for a vector
-        using element_type = typename Head::type;
+        //using element_type = typename Head::type;
         
         // --------------------------------------------------------------------------------------------------
         /// @brief      Converts a nano list into a std vector 
         /// @return     A std::vector with elements from the nano::list
         // --------------------------------------------------------------------------------------------------
-        static constexpr std::vector<element_type> to_vector() 
-        {
-            return std::vector<element_type>({Head::value, Tail::value...});
+        //static constexpr std::vector<element_type> to_vector() 
+        //{
+        //    return std::vector<element_type>({Head::value, Tail::value...});
+        //}
+        
+        // Number of elements in the external array - for readability of below function
+        static constexpr std::size_t num_elements = sizeof...(Tail) + 1;
+        
+        using array_type = typename detail::array_convert<Head>::type;
+        
+        // --------------------------------------------------------------------------------------------------
+        /// @brief      Converts a nano::list to a std::array, if the nano::list just contains elements. If
+        ///             the nano::list contains nano::lists, then a std::array of std::array's is created
+        /// @return     A std::array of elements, where the element type depends on the elements of the
+        ///             nano::list from which it is created.
+        // --------------------------------------------------------------------------------------------------
+        static constexpr std::array<array_type, num_elements> to_array() {
+            return std::array<array_type, num_elements>{ {detail::array_convert<Head>::result(), 
+                                                          detail::array_convert<Tail>::result()...} };
+        }
+        
+        using vector_type = typename detail::vector_convert<Head>::type;
+        
+        // --------------------------------------------------------------------------------------------------
+        /// @brief      Converts a nano::list to a std::vector, if the nano::list just contains elements. If
+        ///             the nano::list contains nano::lists, then a std::vector of std::vector's is created.
+        /// @return     A std::vector of elements, where the element type depends on the elements of the
+        ///             nano::list from which it is created.
+        // --------------------------------------------------------------------------------------------------
+        static constexpr std::vector<vector_type> to_vector() {
+            return std::vector<vector_type>{ {detail::vector_convert<Head>::result(),
+                                              detail::vector_convert<Tail>::result()...} };
         }
     };
     

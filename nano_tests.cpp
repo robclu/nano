@@ -282,12 +282,57 @@ BOOST_AUTO_TEST_CASE( canCreateStdVectorFromNanoList )
     using int_list = nano::list<nano::int_t<3>, nano::int_t<7>, nano::int_t<12>>;
  
     // Create a runtime vector from the converter
-    std::vector<int> test_vector = nano::runtime_converter<int_list>::to_vector();
+    auto test_vector = nano::runtime_converter<int_list>::to_vector();
         
     BOOST_CHECK( test_vector.size() == 3  );
     BOOST_CHECK( test_vector[0]     == 3  );
     BOOST_CHECK( test_vector[1]     == 7  );
     BOOST_CHECK( test_vector[2]     == 12 );
+}
+
+BOOST_AUTO_TEST_CASE( canCreateVectorOfVectorsFromNanoListOfLists )
+{
+    using list_one = nano::list<nano::int_t<10>, nano::int_t<12>>;
+    using list_two = nano::list<nano::int_t<23>, nano::int_t<24>>;
+    
+    using list_list = nano::list<list_one, list_two>;
+    
+    // Convert the list of lists to an array of arrays
+    auto vector_of_vectors = nano::runtime_converter<list_list>::to_vector();
+    
+    BOOST_CHECK( vector_of_vectors[0][0] == 10 );
+    BOOST_CHECK( vector_of_vectors[0][1] == 12 );
+    BOOST_CHECK( vector_of_vectors[1][0] == 23 );
+    BOOST_CHECK( vector_of_vectors[1][1] == 24 );
+}
+
+BOOST_AUTO_TEST_CASE( canCreateAnArrayFromNanoList )
+{
+    using int_list = nano::list<nano::int_t<3>, nano::int_t<7>, nano::int_t<12>>;
+ 
+    // Create a runtime array from the converter
+    auto array = nano::runtime_converter<int_list>::to_array();
+        
+    BOOST_CHECK( array.size() == 3  );
+    BOOST_CHECK( array[0]     == 3  );
+    BOOST_CHECK( array[1]     == 7  );
+    BOOST_CHECK( array[2]     == 12 ); 
+}
+
+BOOST_AUTO_TEST_CASE( canCreateArrayOfArraysFromNanoListOfLists )
+{
+    using list_one = nano::list<nano::int_t<1>, nano::int_t<2>>;
+    using list_two = nano::list<nano::int_t<3>, nano::int_t<4>>;
+    
+    using list_list = nano::list<list_one, list_two>;
+    
+    // Convert the list of lists to an array of arrays
+    auto array_of_arrays = nano::runtime_converter<list_list>::to_array();
+    
+    BOOST_CHECK( array_of_arrays[0][0] == 1 );
+    BOOST_CHECK( array_of_arrays[0][1] == 2 );
+    BOOST_CHECK( array_of_arrays[1][0] == 3 );
+    BOOST_CHECK( array_of_arrays[1][1] == 4 );
 }
     
 BOOST_AUTO_TEST_SUITE_END()

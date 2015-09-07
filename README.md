@@ -196,27 +196,62 @@ int result = nano::multiplies<int_list, two>::result;
 ```Nano``` provides a conversion class to allow nano containers (currently only lists) to be converted to
 runtime containers. At present, the supported runtime containers are:
 
+* ```std::array```
 * ```std::vector```
 
-Additionally, ```nano``` uses the types of the 'variables' in the list which is being converted to determine
-the types of the variables in the container, thus only types that are used to create types in the
-```nano/numeric_types.hpp``` file are currently, however, this is being worked on. Current supported types
-are:
+Additionally, ```nano``` uses the types of the 'elements' in the list which is being converted, to determine
+the types of the elements in the ```std::``` container. Also types which are supported by ```nano``` can be
+used in the ```std::``` containers, which are:
 
 * ```int```
 * ```size_t```
 
-__Converting to a Runtime Vector:__
+```nano``` now also supports ```std``` containers inside of ```std::``` containers -- to allow N dimensional
+containers -- such as:
+
+* ```std::array<std::array<typename X, N> M>```
+* ```std::vector<std::vector<typename X>>```
+
+So both static and dynamic multi-dimensional containers can be created.
+
+__Converting to a Runtime Array or Vector (Single Dimension):__
 
 ```.cpp
 
 // Create a nano::list with 3 integer types
 using int_list = nano::list<nano::int_t<3>, nano::int_t<7>, nano::int_t<12>>;
     
-// Create a runtime vector from the converter
-std::vector<int> test_vector = nano::runtime_converter<int_list>::to_vector();
+// Create a runtime containers
+auto vector = nano::runtime_converter<int_list>::to_vector();
+auto array  = nano::runtime_converter<int_list>::to_array();
 
-// test_vector can now be used as normal
-for (auto& element : test_vector) 
-    std::cout << element << "\n";
+// vector is now:
+// std::vector<int>{3, 7, 12};
+
+// array is now
+// std::array<int, 3>{3, 7, 12};
+
 ```
+
+__Converting to a Runtime Array or Vector (Multi Dimension):__
+
+```.cpp
+
+// Create a nano::list with 3 integer types
+using list_one = nano::list<nano::int_t<3>, nano::int_t<7>, nano::int_t<12>>;
+using list_two = nano::list<nano::int_t<6>, nano::int_t<14>, nano::int_t<24>>;
+
+// Make a list of lists
+using list_of_lists = nano::list<list_one, list_two>;
+    
+// Create a runtime containers
+auto vector = nano::runtime_converter<list_of_lists>::to_vector();
+auto array  = nano::runtime_converter<list_of_lists>::to_array();
+
+// vector is now:
+// std::vector<std:vector<int}>{ {3, 7, 12}, {6, 12, 24} };
+
+// array is now
+// std::array<std::array<int, 3>, 2>{ {3, 7, 12}, {6, 12, 24} };
+```
+
