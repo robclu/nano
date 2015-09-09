@@ -53,7 +53,7 @@ template <template <typename...> class Evaluator, typename List1, typename List2
 struct filter;
 
 // Specialization for when Args is a list
-template <template <typename...> class  Evaluator   , 
+template <template <typename, typename> class  Evaluator   , 
           typename                      Head1       , 
           typename...                   Tail1       , 
           typename                      Head2       ,
@@ -67,44 +67,26 @@ struct filter<Evaluator, list<Head1, Tail1...>, list<Head2, Tail2...>, list<Pass
                         list<Passed...>
                             >::type;
     
-    using result = typename filter<Evaluator, list<Tail1...>, list<Head2, Tail2...>, passed>::result;
-};
-
-// Base case - when all the elements have been evaluated
-template <template <typename...> class  Evaluator   ,
-          typename...                   Tail2       ,
-          typename...                   Passed      >
-struct filter<Evaluator, empty_list, list<Tail2...>, list<Passed...>>
-{
-    using result = list<Passed...>;
-};
-
-// Specialization for evaluator to use list 2 as a filter list
-template <template <typename> class     Evaluator   , 
-          typename                      Head1       , 
-          typename...                   Tail1       , 
-          typename                      Head2       ,
-          typename...                   Tail2       ,   
-          typename...                   Passed      >
-struct filter<Evaluator, list<Head1, Tail1...>, list<Head2, Tail2...>, list<Passed...>>
-{
-    using passed = typename std::conditional<
-                        Evaluator<Head2>::result    ,
-                        list<Passed..., Head1>      ,
-                        list<Passed...>
-                            >::type;
+    // Check if the evaluator uses a constant filter (2nd) list 
+    // or if the filter list must drop the head element
+    using filter_list = typename std::conditional<
+                            Evaluator<Head1, list<Head2, Tail2...>>::constant_list  ,
+                            list<Head2, Tail2...>                                   ,
+                            list<Tail2...>      
+                                >::type;
     
-    using result = typename filter<Evaluator, list<Tail1...>, list<Tail2...>, passed>::result;
+    using result = typename filter<Evaluator, list<Tail1...>, filter_list, passed>::result;
 };
 
 // Base case - when all the elements have been evaluated
-template <template <typename> class     Evaluator   ,
+template <template <typename, typename> class  Evaluator   ,
           typename...                   Tail2       ,
           typename...                   Passed      >
 struct filter<Evaluator, empty_list, list<Tail2...>, list<Passed...>>
 {
     using result = list<Passed...>;
 };
+
 // ----------------------------------------------------------------------------------------------------------
 /// @struct     zip 
 /// @brief      Takes two lists, and zips the corresponding elements into a list of 2 elements if the function

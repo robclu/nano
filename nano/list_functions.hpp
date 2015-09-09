@@ -144,7 +144,7 @@ struct find_uncommon_indices<list<Head1, Tail1...>, list<Head2, Tail2...>>
     // which were found in list 2 by filtering the indices list 
     // using the search results
     using result = typename 
-        filter<not_found, indices, search_results, empty_list>::result;
+        filter<first_not_present, indices, search_results, empty_list>::result;
 };
 
 // ----------------------------------------------------------------------------------------------------------

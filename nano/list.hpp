@@ -134,6 +134,10 @@ struct type_not_present;
 template <typename Type, typename Head, typename... Tail>
 struct type_not_present<Type, list<Head, Tail...>>
 {
+    // The list must remain the same (the type
+    // changes which gives different results)
+    static constexpr bool constant_list = true;
+    
     static constexpr int next_result = type_not_present<Type, list<Tail...>>::result;
     
     // 'Move through list'
@@ -144,6 +148,8 @@ struct type_not_present<Type, list<Head, Tail...>>
 template <typename Type, typename... Tail>
 struct type_not_present<Type, list<Type, Tail...>>
 {
+    static constexpr bool constant_list = true;
+    
     static constexpr int result = 0;
 };
 
@@ -151,7 +157,29 @@ struct type_not_present<Type, list<Type, Tail...>>
 template <typename Type>
 struct type_not_present<Type, list<>>
 {
+    static constexpr bool constant_list = true;
+    
     static constexpr int result = 1;
+};
+
+// ----------------------------------------------------------------------------------------------------------
+/// @struct     first_not_present
+/// @brief      Just check if the first element of the list was found (searching should be done beforehand)
+/// @tparam     Type    This is just a placeholder to conform to the Evaluator interface for the filter
+///             function 
+/// @tparam     List    The list to check if the first element was not found
+// ----------------------------------------------------------------------------------------------------------
+template <typename Type, typename List>
+struct first_not_present;
+
+template <typename Type, typename Head, typename... Tail>
+struct first_not_present<Type, list<Head, Tail...>>
+{
+    // The list must change (to get different results the
+    // head of the list must be removed for the next it
+    static constexpr bool constant_list = false;
+    
+    static constexpr bool result = Head::value == -1 ? true : false;
 };
 
 // ----------------------------------------------------------------------------------------------------------
