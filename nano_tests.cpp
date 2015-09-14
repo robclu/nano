@@ -271,6 +271,24 @@ BOOST_AUTO_TEST_CASE( zipHigherOrderFunctionWorks )
     BOOST_CHECK( first_element.runtime_value() == -10 );
 }
 
+BOOST_AUTO_TEST_CASE( nanoAccumulateFunctionWorksForMultiplication )
+{ 
+    using list = nano::list<nano::size_t<1>, nano::size_t<3>, nano::size_t<12>>;
+    
+    size_t result = nano::accumulate<list, 0, 1>::result;
+    
+    BOOST_CHECK( result == 3 );
+}
+
+BOOST_AUTO_TEST_CASE( nanoAccumulateFunctionWorksForAddition )
+{ 
+    using list = nano::list<nano::size_t<1>, nano::size_t<3>, nano::size_t<12>>;
+    
+    size_t result = nano::accumulate<list, 0, 2, 0, nano::add>::result;
+    
+    BOOST_CHECK( result == 16 );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
     
 // --------------------------------- Runtime Converter Tests ------------------------------------------------

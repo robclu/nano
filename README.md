@@ -157,7 +157,7 @@ std::size_t size_two_index  = nano::find_type<nano::size_t<2>, test_list>::resul
 
 #### Multiplies
 
-The multiplies functions is the same as std::multiplies -- it multiplies all the elements of the list. It
+The multiplies functions multiplies all the elements of the list. It
 needs a list and a starting value. If no starting value is given then 1 is used. Currently the multiplies
 function supports the following types
 
@@ -189,6 +189,33 @@ using int_list = nano::list<two, four, siz>;
 // result has a value of 96, since the multiplication 
 // started from a value of 2
 int result = nano::multiplies<int_list, two>::result;
+```
+
+#### Accumulate 
+
+Accumulate is a more general function than multiplies, and is intended to operate similarly to
+std::accumulate. It takes a list, start and end indices, a start value and an operatrion function.
+Currently supported functions are:
+
+* ```multiplication```
+* ```addition```
+Multiplication is the default operation, with a default starting value of 1
+
+```.cpp
+
+using list = nano::list<nano::size_t<1>, nano::size_t<3>, nano::size_t<12>>;
+
+// Multiply elements 0, 1, 2 of list with a starting value of 1
+size_t result_one = nano::accumulate<list, 0, 2>::result;   
+
+// Multiply elements 1, 2 of list with a starting value of 10
+size_t result_two = nano::accumulate<list, 1, 2, 10>::result;   
+
+// Add elements 0, 1, 2 of list with a starting value of 1
+size_t result_three = nano::accumulate<list, 0, 2, 1, add>::result;
+
+// Add elements 1, 2 of list with a starting value of 0
+size_t result_four  = nano::accumulate<list, 1, 2, 0, nano::add>::result;   
 ```
 
 #### Runtime Conversion

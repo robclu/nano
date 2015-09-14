@@ -31,6 +31,7 @@
 
 #include <nano/higher_order_functions.hpp>
 
+#include <limits>
 #include <type_traits>
 
 namespace nano {
@@ -179,6 +180,76 @@ struct multiplies<empty_list, Current>
 {
     static constexpr typename Current::type result = Current::value;
 };
+
+namespace detail {
+    
+// ----------------------------------------------------------------------------------------------------------
+/// @struct     accumulate  
+/// @brief      Like std::accumulate, where the start and end indices, and the accumulation functor can be
+///             specified
+/// @tparam     List        The list to accumulate
+/// @tparam     Iteration   The iteration of the function
+/// @tparam     StartIndex  The index of the element in the list to start accumulating from
+/// @tparam     EndIndex    The index of the element in the list to end accumulating at
+/// @tparam     Value       The value of the accumulation
+/// @param      Operation   The operation to apply (multiply, add ...)
+//-----------------------------------------------------------------------------------------------------------
+template <typename                      List        , 
+          std::size_t                   Iteration   ,
+          typename                      StartIndex  ,      
+          typename                      EndIndex    , 
+          typename                      Value       , 
+          template <typename...> class  Operation   > 
+struct accumulate;
+
+// Recursive case
+template <typename                      Head        ,
+          typename...                   Tail        ,
+          std::size_t                   Iteration   ,
+          typename                      StartIndex  ,
+          typename                      EndIndex    ,
+          typename                      Value       ,
+          template <typename...> class  Operation   >
+struct accumulate<list<Head, Tail...>, Iteration, StartIndex, EndIndex, Value, Operation>
+{
+    using temp_type =  typename std::conditional<Iteration >= StartIndex::value                 &&
+                                                 Iteration <= EndIndex::value                   ,
+                                                 Head                                           , 
+                                                 typename Operation<Head, Value>::default_type
+                                                     >::type;
+    
+    using current_accumulation = typename Operation<temp_type, Value>::type;
+    
+    static constexpr typename Value::type result = 
+        accumulate<list<Tail...>, Iteration + 1, StartIndex, EndIndex, current_accumulation, Operation>::result;
+};
+
+// Terminating case
+template <typename...                   Tail        ,
+          std::size_t                   Iteration   ,
+          typename                      StartIndex  ,
+          typename                      EndIndex    ,
+          typename                      Value       ,
+          template <typename...> class  Operation   >
+struct accumulate<list<Tail...>, Iteration, StartIndex, EndIndex, Value, Operation>
+{
+    static constexpr typename Value::type result = Value::value;
+};
+
+}           // End namespace detail
+
+
+template <typename                      List                                                    ,
+          std::size_t                   StartIndex  = 0                                         ,
+          std::size_t                   EndIndex    = std::numeric_limits<std::size_t>::max()   ,
+          std::size_t                   StartValue  = 1                                         ,
+          template <typename...> class  Operation   = nano::multiply                            >
+using accumulate = detail::accumulate<List                      , 
+                                      0                         , 
+                                      nano::size_t<StartIndex>  , 
+                                      nano::size_t<EndIndex>    ,
+                                      nano::size_t<StartValue>  ,
+                                      Operation                 >;
 
 }           // End namespace nano
 

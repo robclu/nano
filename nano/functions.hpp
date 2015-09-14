@@ -109,7 +109,25 @@ struct size_of<Container<Types...>>
 template <typename Arg1, typename Arg2>
 struct multiply
 {
+    using type          = nano::size_t<Arg1::value * Arg2::value>;
+    using default_type  = nano::size_t<1>;
+        
     static constexpr typename Arg1::type result = Arg1::value * Arg2::value;
+};
+
+// ----------------------------------------------------------------------------------------------------------
+/// @struct     add
+/// @brief      Addss two nano numeric types
+/// @tparam     Arg1    The first argument for the addition
+/// @tparam     Arg2    The second argument for addition
+// ----------------------------------------------------------------------------------------------------------
+template <typename Arg1, typename Arg2>
+struct add
+{
+    using type          = nano::size_t<Arg1::value + Arg2::value>; 
+    using default_type  = nano::size_t<0>;
+    
+    static constexpr typename Arg1::type result = Arg1::value + Arg2::value;
 };
 
 }       // End namespace nano
