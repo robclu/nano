@@ -273,9 +273,9 @@ BOOST_AUTO_TEST_CASE( zipHigherOrderFunctionWorks )
 
 BOOST_AUTO_TEST_CASE( nanoAccumulateFunctionWorksForMultiplication )
 { 
-    using list = nano::list<nano::size_t<1>, nano::size_t<3>, nano::size_t<12>>;
+    using list = nano::list<nano::size_t<3>, nano::size_t<3>, nano::size_t<12>>;
     
-    size_t result = nano::accumulate<list, 0, 1>::result;
+    size_t result = nano::accumulate<list, 0, 0>::result;
     
     BOOST_CHECK( result == 3 );
 }

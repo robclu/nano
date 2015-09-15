@@ -52,7 +52,7 @@ build_and_run: build_tests
 	./$(EXE) --log_level=test_suite
 	
 run:
-	./#(EXE) --log_level=test_suite
+	./(EXE) --log_level=test_suite
 	
 build: build_tests
 	

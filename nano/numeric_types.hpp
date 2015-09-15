@@ -27,6 +27,8 @@
 #ifndef NANO_NUMERIC_TYPES_HPP
 #define NANO_NUMERIC_TYPES_HPP
 
+#include <cstdlib>
+
 namespace nano {
  
 // ----------------------------------------------------------------------------------------------------------
