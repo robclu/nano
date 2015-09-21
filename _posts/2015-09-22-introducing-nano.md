@@ -29,15 +29,14 @@ The automatically generated documentation from the code comments can be found at
 
 ## Installation 
 
-See the [installation](/nano/installation) or the link in the sidebar for
-installation.
+Information regarding installation can be found at [installation](/nano/installation) or the link in the sidebar
 
 ## Examples
 
 Nano is still under development, however, examples of the latest functionality can be found at
 [examples](https:://robclu.github.io/examples.md).
 
-Suggestions for additional general, or specific functionality are welcomed.
+Suggestions for additional functionality are welcomed.
 
 ## Contact
 
