@@ -10,6 +10,11 @@ Most of the functionality at the moment is functionality I have needed for some 
 
 I've also tried to document the code well enough for others to learn from, since the learning curve for tmp can be steep. Additionally I have provided a test file using the [Boost Test library](http://www.boost.org/doc/libs/1_58_0/libs/test/doc/html/index.html), which should help to see how the library can be used with runtime code.
 
+# Documentation
+
+The documentation, which includes usage examples as well as the doxygen generated documentation, can be found
+at https://robclu.github.io/nano
+  
 # Install 
 
 *nano* is a header only library, so to use it you just need to include the header file:
