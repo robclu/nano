@@ -14,7 +14,7 @@ baseurl:          /nano
 
 author:
   name:           'Rob Clucas'
-  url:              https://robclu.github.io
+  url:              https://robclu.github.io/nano
 
 paginate:         5
 
