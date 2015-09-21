@@ -5,7 +5,7 @@ title: Installation
 
 Nano is a header only library, so to use it you just need to include the header file:
 
-```.cpp
+```cpp
 #include "nano/nano.hpp"
 ```
 
