@@ -29,13 +29,13 @@ The automatically generated documentation from the code comments can be found at
 
 ## Installation 
 
-See the [installation](/installation) or the link in the sidebar for
+See the [installation](/nano/installation) or the link in the sidebar for
 installation.
 
 ## Examples
 
 Nano is still under development, however, examples of the latest functionality can be found at
-[examples](/examples).
+[examples](/nano/examples).
 
 Suggestions for additional general, or specific functionality are welcomed.
 
