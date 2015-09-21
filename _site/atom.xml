@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>Nano</title>
- <link href="http:///atom.xml" rel="self"/>
- <link href="http:///"/>
- <updated>2015-09-21T22:22:51+02:00</updated>
- <id>http://</id>
+ <link href="https://robclu.github.io/nano/atom.xml" rel="self"/>
+ <link href="https://robclu.github.io/nano/"/>
+ <updated>2015-09-21T23:44:30+02:00</updated>
+ <id>https://robclu.github.io/nano</id>
  <author>
    <name>Rob Clucas</name>
    <email></email>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Introducing Nano</title>
-   <link href="http:///2015/09/22/introducing-nano/"/>
+   <link href="https://robclu.github.io/nano/2015/09/22/introducing-nano/"/>
    <updated>2015-09-22T00:00:00+02:00</updated>
-   <id>http:///2015/09/22/introducing-nano</id>
+   <id>https://robclu.github.io/nano/2015/09/22/introducing-nano</id>
    <content type="html">&lt;p&gt;Nano is a c++ template metaprogramming library. It is designed with ease of use in mind, to provide compile
 time implementations of common STL functions as well as functions commonly seen in functional programming.
 Nano is written by &lt;a href=&quot;https://robclu.github.io&quot;&gt;Rob Clucas&lt;/a&gt; and is released under the &lt;a href=&quot;http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html&quot;&gt;GNU GPL V2.0&lt;/a&gt;.&lt;/p&gt;
@@ -45,13 +45,13 @@ functional languages (mostly haskell), so that both understanding and usage of n
 
 &lt;h2&gt;Installation&lt;/h2&gt;
 
-&lt;p&gt;See the &lt;a href=&quot;https://robclu.github.io/nano/installation&quot;&gt;installation&lt;/a&gt; or the link in the sidebar for
+&lt;p&gt;See the &lt;a href=&quot;/nano/installation&quot;&gt;installation&lt;/a&gt; or the link in the sidebar for
 installation.&lt;/p&gt;
 
 &lt;h2&gt;Examples&lt;/h2&gt;
 
 &lt;p&gt;Nano is still under development, however, examples of the latest functionality can be found at
-&lt;a href=&quot;/examples&quot;&gt;examples&lt;/a&gt;.&lt;/p&gt;
+&lt;a href=&quot;https:://robclu.github.io/examples.md&quot;&gt;examples&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Suggestions for additional general, or specific functionality are welcomed.&lt;/p&gt;
 
