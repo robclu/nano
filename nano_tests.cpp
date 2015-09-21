@@ -27,14 +27,6 @@ BOOST_AUTO_TEST_CASE( canCreateStaticNanoSizeType )
     BOOST_CHECK( static_size_type.runtime_value() == 0 );
 }
 
-BOOST_AUTO_TEST_CASE( canUseDefinedDimensionTypes )
-{
-    using namespace nano::dim;                    // To access dimension variables
-    
-    BOOST_CHECK( i.runtime_value() == 0 );
-    BOOST_CHECK( j.runtime_value() == 1 );
-}
-
 BOOST_AUTO_TEST_SUITE_END()
 
 // ---------------------------------------- List Tests ------------------------------------------------------

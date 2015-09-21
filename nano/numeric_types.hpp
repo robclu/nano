@@ -77,18 +77,6 @@ struct int_t
     constexpr int runtime_value() const { return Value; }
 };
 
-// ----------------------------------------------------------------------------------------------------------
-/// @namespace  dim
-/// @brief      Defines nano::size_t types to use as dimension accessors in lists and tensors etc...
-// ----------------------------------------------------------------------------------------------------------
-namespace dim {
-    
-    nano::size_t<0> i;
-    nano::size_t<1> j;
-    nano::size_t<2> l;
-    nano::size_t<3> m;
-
-}       // End namespace dim
 }       // End namespace nano
 
 #endif  // NANO_NUMERIC_TYPES_HPP

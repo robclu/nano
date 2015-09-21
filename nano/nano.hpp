@@ -24,8 +24,10 @@
  * ----------------------------------------------------------------------------------------------------------
  */
 
-#ifndef NANO_NANO_HPP
-#define NANO_NANO_HPP
+//#ifndef NANO_NANO_HPP
+//#define NANO_NANO_HPP
+
+#pragma once
 
 #include "containers.hpp"
 #include "eval.hpp"
@@ -36,4 +38,4 @@
 #include "numeric_types.hpp"
 #include "runtime_converter.hpp"
 
-#endif  // NANO_NANO_HPP
+//#endif  // NANO_NANO_HPP
