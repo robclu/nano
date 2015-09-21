@@ -9,7 +9,8 @@ permalink:        pretty
 title:            Nano
 tagline:          'A C++ template metaprogramming library'
 description:      'A C++ template metaprogramming library designed to provide compile time implementations of common STL and functional programming functions, as well as allowing user-defined metafunctions to be easily implemented using the functions provided by nano'
-url:              http://robclu.github.io/nano
+url:              https://robclu.github.io
+baseurl:          /nano
 
 author:
   name:           'Rob Clucas'
