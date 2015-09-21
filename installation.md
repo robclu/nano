@@ -9,7 +9,7 @@ Nano is a header only library, so to use it you just need to include the header 
 #include "nano/nano.hpp"
 ```
 
-so long as the dirctory in which the nano folder is installed is in your ```$PATH```. If it is not in your
+so long as the dirctory in which the nano folder is installed is in your ```PATH```. If it is not in your
 path, to will need to give the compiler the directory in which the nano headers are found, like:
 
 ```
@@ -20,7 +20,7 @@ A Makefile is provided to install nano to ```/usr/local``` by default (all this 
 ```/usr/local``` which you can change by modifying the ```INSTALL_DIR``` variable in the Makefile to the desired
  path). 
 
-You must then add the directory to the ```PATH``` (ideally add this to your ```.bashrc```):
+You must then add the directory to the ```PATH``` (ideally add this to your ```~/.bashrc```):
 
 ```
 export PATH=<INSTALL_DIR>:$PATH
