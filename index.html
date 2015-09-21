@@ -6,18 +6,19 @@ layout: default
   {% for post in paginator.posts %}
   <div class="post">
     <h1 class="post-title">
-      <a href="{{ post.url }}">
+      <!--<a href="{{ post.url }}">
         {{ post.title }}
-      </a>
+        </a>-->
     </h1>
 
-    <span class="post-date">{{ post.date | date_to_string }}</span>
+    <span class="post-date">{{ }}</span>
 
     {{ post.content }}
   </div>
   {% endfor %}
 </div>
 
+<!--
 <div class="pagination">
   {% if paginator.next_page %}
     <a class="pagination-item older" href="/page{{paginator.next_page}}">Older</a>
@@ -34,3 +35,4 @@ layout: default
     <span class="pagination-item newer">Newer</span>
   {% endif %}
 </div>
+--->
