@@ -1,0 +1,55 @@
+<p>Defined in ```numeric_types.hpp”</p>
+
+<h1 id="contents">Contents</h1>
+
+<ul>
+  <li><a href="#types">Types</a></li>
+  <li>[Attributes)(#attributes)</li>
+  <li><a href="#usage">Usage</a></li>
+</ul>
+
+<h1 id="types">Types</h1>
+
+<p>Currently, nano provides the following types</p>
+
+<ul>
+  <li><code>nano::int_t&lt;int&gt;</code> - for integer types</li>
+  <li><code>nano::size_t&lt;std::size_t&gt;</code> - for size_t types</li>
+</ul>
+
+<p>Additional numeric types such as floats and doubles will be added in the future.</p>
+
+<h1 id="attributes">Attributes</h1>
+
+<p>Each <code>numeric_type</code>` has two attributes</p>
+
+<ul>
+  <li><code>type</code> - which is the internal type that makes up the type, so <code>int</code> or <code>size_t</code></li>
+  <li><code>value</code> - which is the value which the type holds</li>
+</ul>
+
+<h1 id="usage">Usage</h1>
+
+<p>Declaring a <code>numeric_type</code> is done as follows</p>
+
+<p>```cpp
+\ Create a nano integer type
+using int_four = nano::int_t&lt;4&gt;;</p>
+
+<p>\ Create a nano size type
+using sizet_four = nano::size_t&lt;4&gt;;
+```</p>
+
+<p>The attributes are accessed through the scope resolution operator, so they can be used to declare types of
+their internal types, such as</p>
+
+<p>```cpp
+using int_three = nano::int_t&lt;3&gt;;</p>
+
+<p>// Use the internal int type of the nano::int_t to define an int
+int_three::type new_int = 4;</p>
+
+<p>// Use the value of the nano::int_t
+if (int_three::value &gt; 2) // Do something
+```</p>
+

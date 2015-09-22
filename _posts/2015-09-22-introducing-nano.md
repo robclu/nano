@@ -39,7 +39,7 @@ Information regarding installation can be found at [installation](/nano/installa
 ## Examples
 
 Nano is still under development, however, examples of the latest functionality can be found at
-[examples](https:://robclu.github.io/examples.md).
+[examples](/nano/examples).
 
 Suggestions for additional functionality are welcomed.
 

@@ -1,0 +1,62 @@
+<p>Defined in <code>list.hpp</code></p>
+
+<p>This page gives an introduction to the <code>nano::list</code> type, see the examples and usage main page for all
+functionality.</p>
+
+<h1 id="contents">Contents</h1>
+
+<ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#list-size">List Size</a></li>
+  <li><a href="#get">Get</a></li>
+</ul>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Lists are the building block for everything that is nano. They are based off of what Alexandrescu calls <em>typelists</em> in  <a href="http://www.amazon.com/Modern-Design-Generic-Programming-Patterns/dp/0201704315">Modern C++ Design</a>, with slightly extended functionality.</p>
+
+<p>The basis of the <code>nano::list</code> is that it hold types, these can be types such as <code>int, double, float
+..</code>, or with the <a href="/nano/usage/numeric_types">numeric types</a> defined by nano such as <code>nano::int_t&lt;&gt; and
+nano::size_t&lt;&gt;</code> – which enable much more powerful metaprogramming.</p>
+
+<p>Declaring lists is simple, for example, using a <code>nano::list</code> as a typelist can be done as follows:</p>
+
+<p><code>cpp
+using typelist = nano::list&lt;int, float, double&gt;;
+</code></p>
+
+<p>But to really get the full functionality of nano, the numeric types should be used to create value lists, such
+as</p>
+
+<p><code>cpp
+using int_list = nano::list&lt;nano::int_t&lt;1&gt;, nano::int_t&lt;2&gt;, nano::int_t&lt;4&gt;&gt;;
+</code></p>
+
+<h1 id="list-size">List Size</h1>
+
+<p>Lists have size functionality, which is returned as <code>std::size_t</code>, the size of a list can be determined as
+follows:</p>
+
+<p>```cpp
+using int_list = nano::list&lt;nano::int_t&lt;1&gt;, nano::int_t&lt;2&gt;, nano::int_t&lt;4»;</p>
+
+<p>// Get the size of the list
+std::size_t list_size = int_list::size;</p>
+
+<p>// list_size = 3 
+```</p>
+
+<h1 id="get">Get</h1>
+
+<p>Nano provides the <code>get</code> function for gettting the value of a list element at a specific index. For
+example</p>
+
+<p>```cpp
+using sizet_list = nano::list&lt;nano::size_t&lt;1&gt;, nano::size_t&lt;2&gt;, nano::size_t&lt;4»;</p>
+
+<p>// Get the first element of the list
+using first_element = nano::get&lt;0, sizet_list&gt;;</p>
+
+<p>// first_element = nano::size_t&lt;1&gt;;
+```</p>
+

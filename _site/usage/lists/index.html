@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Lists &middot; Nano
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/nano/public/css/poole.css">
+  <link rel="stylesheet" href="/nano/public/css/syntax.css">
+  <link rel="stylesheet" href="/nano/public/css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/nano/public/nano.png">
+  <link rel="shortcut icon" href="/nano/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/nano/atom.xml">
+</head>
+
+
+  <body class="theme-base-0d layout-reverse">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" checked>
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A C++ template metaprogramming library designed to provide compile time implementations of common STL and functional programming functions, as well as allowing user-defined metafunctions to be easily implented using the interfaces provided by nano.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/nano">Home</a>
+
+    
+
+
+    
+    
+      
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/nano/examples/">Examples and Usage</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/nano/installation/">Installation</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+
+    <a class="sidebar-nav-item" href="https://github.com/robclu/nano/archive/master.zip">Download</a>
+    <a class="sidebar-nav-item" href="https://github.com/robclu/nano">GitHub project</a>
+    <!--<span class="sidebar-nav-item">Currently v1.0</span>-->
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2015. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+          <h3 class="masthead-title">
+            <a href="/nano" title="Home">Nano</a>
+            <small>A C++ template metaprogramming library</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Lists</h1>
+  <span class="post-date"></span>
+  <p>Defined in <code>list.hpp</code></p>
+
+<p>This page gives an introduction to the <code>nano::list</code> type, see the examples and usage main page for all
+functionality.</p>
+
+<h1>Contents</h1>
+
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#list-size">List Size</a></li>
+<li><a href="#get">Get</a></li>
+</ul>
+
+<h1>Introduction</h1>
+
+<p>Lists are the building block for everything that is nano. They are based off of what Alexandrescu calls <em>typelists</em> in  <a href="http://www.amazon.com/Modern-Design-Generic-Programming-Patterns/dp/0201704315">Modern C++ Design</a>, with slightly extended functionality.</p>
+
+<p>The basis of the <code>nano::list</code> is that it hold types, these can be types such as <code>int, double, float
+..</code>, or with the <a href="/nano/usage/numeric_types">numeric types</a> defined by nano such as <code>nano::int_t&lt;&gt; and
+nano::size_t&lt;&gt;</code> -- which enable much more powerful metaprogramming.</p>
+
+<p>Declaring lists is simple, for example, using a <code>nano::list</code> as a typelist can be done as follows:</p>
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">using</span> <span class="n">typelist</span> <span class="o">=</span> <span class="n">nano</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div>
+<p>But to really get the full functionality of nano, the numeric types should be used to create value lists, such
+as </p>
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">using</span> <span class="n">int_list</span> <span class="o">=</span> <span class="n">nano</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="n">nano</span><span class="o">::</span><span class="kt">int_t</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">nano</span><span class="o">::</span><span class="kt">int_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">nano</span><span class="o">::</span><span class="kt">int_t</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+</code></pre></div>
+<h1>List Size</h1>
+
+<p>Lists have size functionality, which is returned as <code>std::size_t</code>, the size of a list can be determined as
+follows:</p>
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">using</span> <span class="n">int_list</span> <span class="o">=</span> <span class="n">nano</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="n">nano</span><span class="o">::</span><span class="kt">int_t</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">nano</span><span class="o">::</span><span class="kt">int_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">nano</span><span class="o">::</span><span class="kt">int_t</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+
+<span class="c1">// Get the size of the list</span>
+<span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">list_size</span> <span class="o">=</span> <span class="n">int_list</span><span class="o">::</span><span class="n">size</span><span class="p">;</span>
+
+<span class="c1">// list_size = 3 </span>
+</code></pre></div>
+<h1>Get</h1>
+
+<p>Nano provides the <code>get</code> function for gettting the value of a list element at a specific index. For
+example</p>
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">using</span> <span class="n">sizet_list</span> <span class="o">=</span> <span class="n">nano</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="n">nano</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">nano</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">nano</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+
+<span class="c1">// Get the first element of the list</span>
+<span class="k">using</span> <span class="n">first_element</span> <span class="o">=</span> <span class="n">nano</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span> <span class="n">sizet_list</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="c1">// first_element = nano::size_t&lt;1&gt;;</span>
+</code></pre></div>
+</div>
+
+      </div>
+    </div>
+
+  </body>
+</html>
