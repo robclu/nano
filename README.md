@@ -13,7 +13,7 @@ I've also tried to document the code well enough for others to learn from, since
 # Documentation
 
 The documentation, which includes usage examples as well as the doxygen generated documentation, can be found
-at https://robclu.github.io/nano
+at [Nano Documentation](https://robclu.github.io/nano).
   
 # Install 
 
