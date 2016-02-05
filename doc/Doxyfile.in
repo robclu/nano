@@ -12,8 +12,8 @@ QUIET                   = YES
 
 # Resources
 OUTPUT_DIRECTORY        =
-INPUT                   = @Nano_SOURCE_DIR@/include \
-                          @Nano_SOURCE_DIR@/doc/doxy.hpp
+INPUT                   = @Nano_SOURCE_DIR@/include           \
+                          @Nano_SOURCE_DIR@/doc/mainpage.hpp  
 FILE_PATTERNS           = *.hpp
 RECURSIVE               = YES
 EXCLUDE                 =
